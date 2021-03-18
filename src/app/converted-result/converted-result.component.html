@@ -1,0 +1,43 @@
+<div class="currencies__result">
+  <div>
+    <mat-form-field appearance="outline" *ngIf="availableCurrencies?.length">
+      <mat-label>Add currency</mat-label>
+      <mat-select>
+        <mat-option
+          (onSelectionChange)="addCurrency(currency, index)"
+          *ngFor="let currency of availableCurrencies; let index = index"
+          >{{ currency }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <table mat-table class="currencies__result__table" [dataSource]="dataSource">
+    <ng-container matColumnDef="currency">
+      <th mat-header-cell *matHeaderCellDef>Currency</th>
+      <td mat-cell *matCellDef="let element">{{ element.code }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="rate">
+      <th mat-header-cell *matHeaderCellDef>Rate</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.calculatedRate | currency: element.code || "N/A" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="control">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element; let index = index">
+        <button mat-icon-button (click)="removeCurrency(element.code, index)">
+          <mat-icon>remove</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="100">No result</td>
+    </tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

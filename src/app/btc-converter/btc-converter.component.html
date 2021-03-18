@@ -1,0 +1,14 @@
+<div class="form" [formGroup]="form">
+  
+  <mat-form-field appearance="outline">
+    <mat-label>BTC</mat-label>
+    <input matInput type="number" placeholder="Enter BTC amount" formControlName="btc" autofocus/>
+    <mat-error>Required field, minimum value 1</mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button class="form__button" color="accent" (click)="convert()">Convert</button>
+</div>
+
+<span>Last time rates were updated: {{ lastTimeUpdated | async | date: 'yyyy-MM-dd HH:mm' }}</span>
+
+<app-converted-result [rates]="calculatedCurrencies" [supportedCurrencies]="supportedCurrencies"></app-converted-result>
